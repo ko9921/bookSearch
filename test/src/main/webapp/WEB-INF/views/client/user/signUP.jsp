@@ -4,7 +4,7 @@
 <!-- style -->
 <link rel="stylesheet" href="/css/user/signup.css" />
 <!-- Sign UP -->
-<section id="signUp">
+<section id="signup">
 	<div id="wrapper">
 		<div class="signup-container">
 			<div class="row">
@@ -28,7 +28,7 @@
 									<label class="control-label" for="password">이름</label>
 									<input type="text" placeholder="Please enter your name" required="" value="" name="name" id="name" class="form-control">
 								</div>
-								<button class="btn btn-success btn-block" onclick="signup()"> 회원가입 </button>
+								<button type="button" class="btn btn-success btn-block" onclick="signup()"> 회원가입 </button>
 							</form>
 						</div>
 					</div>

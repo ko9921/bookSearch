@@ -6,3 +6,13 @@
 	background-color : #aaaaaa;
 	margin-top: 40px;
 }
+
+.search-history {
+	border: 1px solid #FFE400;
+	background-color : #ffffdf;
+	margin-top: 40px;
+}
+
+.list-title {
+	margin-bottom : 10px;
+}

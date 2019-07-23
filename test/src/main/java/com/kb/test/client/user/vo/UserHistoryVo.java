@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.data.annotation.LastModifiedDate;
+
 @Entity
 @Table(name = "userhistory")
 public class UserHistoryVo{
@@ -26,7 +28,7 @@ public class UserHistoryVo{
 	
 	@Column
 	private Timestamp searchdtime;	//등록일시
-
+	
 	
 	public Long getIdx() {
 		return idx;

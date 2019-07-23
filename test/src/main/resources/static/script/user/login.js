@@ -5,14 +5,22 @@ $(document).ready(function() {
 
 function login() {
 	
+	var params = $('#loginForm').serializeObject();
+	
 	if(validation()){
 		$.ajax({
 			type: "POST",
 			url : "/user/loginAction",
-			data: JSON.stringify(params),
-			contentType: "application/json; charset=utf-8",
+			data: params,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			success : function(result){
-				alert("123");
+				if(result.result == "SUCCESS") {
+					alert(result.msg);
+					location.href = "/";
+				} else {
+					alert(result.msg);
+				}
 			}
 		});
 	}

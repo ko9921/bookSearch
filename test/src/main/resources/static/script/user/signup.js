@@ -3,16 +3,26 @@ $(document).ready(function() {
 	
 });
 
-function login() {
+function signup() {
+	
+	var params = $('#signupForm').serializeObject();
 	
 	if(validation()){
 		$.ajax({
 			type: "POST",
 			url : "/user/signupAction",
-			data: JSON.stringify(params),
-			contentType: "application/json; charset=utf-8",
+			data: params,
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8", 
 			success : function(result){
-				alert("123");
+				if(result != null) {
+					if(result.result == "SUCCESS") {
+						alert(result.msg);
+						location.href = "/";
+					} else {
+						alert(result.msg);
+					}
+				}
 			}
 		});
 	}

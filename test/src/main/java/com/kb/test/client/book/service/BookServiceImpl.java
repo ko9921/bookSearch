@@ -34,13 +34,11 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Transactional
-	public HashMap<String, String> setBookKeyword(Map<String, Object> condition) {
+	public HashMap<String, String> setBookKeyword(String keyword) {
 		HashMap<String, String> response = new HashMap<String, String>();
 
 		try {
 			// Insert or Update
-			String keyword = (String)condition.get("search");
-			
 			BookVo resultKeyword = bookRepository.findBykeyword(keyword);
 			if(resultKeyword != null) {
 				//update

@@ -10,5 +10,5 @@ public interface BookService {
 	
 	public List<BookVo> getKeywordList();
 
-	public HashMap<String, String> setBookKeyword(Map<String, Object> condition);
+	public HashMap<String, String> setBookKeyword(String keyword);
 }

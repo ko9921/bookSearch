@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.kb.test.client.book.service.BookService;
 import com.kb.test.client.book.vo.BookVo;
+import com.kb.test.client.user.service.UserService;
+import com.kb.test.common.util.CommonUtil;
 import com.kb.test.common.util.JsonUtil;
 
 /**
@@ -33,20 +38,40 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/searchList")
 	@ResponseBody
 	@Transactional
-	public List<Map<String, Object>> getSearchList(@RequestParam Map<String, Object> params) {
+	public List<Map<String, Object>> getSearchList(HttpServletRequest req, @RequestParam Map<String, Object> params) {
+		
+		HttpSession session = req.getSession();
+		String keyword = "";
 		
 		// 5. 인기 키워드 목록 (저장로직)
-		HashMap<String, String> response = bookService.setBookKeyword(params);
+		if(params != null) {
+			keyword = CommonUtil.getSafeString(params.get("search"));
+		}
+		
+		if(keyword.equals("")) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		
+		HashMap<String, String> response = bookService.setBookKeyword(keyword);
 		
 		if(response.get("msg").equals("FAIL")) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		
-		// 4. 내 검색 히스토리 (로그인시에만 검색히스토리 작성)
+		// 4. 내 검색 히스토리 (로그인시에만 검색히스토리 작성) 
+		if(!CommonUtil.getSafeString(session.getAttribute("id")).equals("")) {
+			response = userService.setUserHistory(keyword, CommonUtil.getSafeString(session.getAttribute("id")));
+			if(response.get("msg").equals("FAIL")) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
+		}
 		
 		// 2. 책 검색
 		
@@ -69,7 +94,6 @@ public class BookController {
 	@ResponseBody
 	public List<Map<String, Object>> getKeywordList() {
 		// 5. 인기 키워드 목록 (리스트 가져오기)
-		System.out.println("제발");
 		List<BookVo> response = bookService.getKeywordList();
 		JSONArray tempJson = new JSONArray();
 		

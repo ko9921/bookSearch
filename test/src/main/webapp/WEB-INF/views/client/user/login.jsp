@@ -20,7 +20,7 @@
 									<label class="control-label" for="password">비밀번호</label>
 									<input type="password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
 								</div>
-								<button class="btn btn-success btn-block" onclick="login()"> 로그인 </button>
+								<button type="button" class="btn btn-success btn-block" onclick="login()"> 로그인 </button>
 							</form>
 						</div>
 					</div>
