@@ -1,4 +1,4 @@
-package com.kb.test.home.controller;
+package com.kb.test.client.home.controller;
 
 import java.util.Locale;
 
