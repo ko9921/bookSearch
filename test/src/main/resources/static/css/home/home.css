@@ -16,3 +16,28 @@
 .list-title {
 	margin-bottom : 10px;
 }
+
+.searchBookListTitle {
+	margin-top: 15px;
+	padding: 10px;
+	background-color: #a8a8a8;
+	line-height: 2;
+}
+
+.book-item {
+	padding: 10px;
+	border-left: #a8a8a8 1px solid;
+	border-right: #a8a8a8 1px solid;
+	border-bottom: #a8a8a8 1px solid;
+	cursor: pointer;
+}
+
+.searchDetail {
+	border: #a8a8a8 1px solid;
+	margin-top: 15px;
+	padding: 20px;
+}
+
+.detail-content {
+	margin-bottom : 20px;
+}

@@ -38,17 +38,25 @@
 					<!-- 검색 -->
 					<div class="row">
 						<div class="col-md-10">
-							<input type="text" title="Please enter title / ISBN / publisher / person" placeholder="Search" value="" name="search" id="search" autofocus="autofocus" class="form-control">
+							<input type="text" title="Please enter title / ISBN / publisher / person" placeholder="Search" value="" name="keyword" id="keyword" autofocus="autofocus" class="form-control">
 						</div>
 						<div class="col-md-2">
 							<button class="btn btn-success btn-block" onclick="search()"> 검색 </button>
 						</div>
 					</div>
 					<!-- 검색 리스트 -->
-					<div class="row">
+					<div class="row searchList">
+						<div class="searchBookListTitle col-md-12">
+							<div class="col-md-9 text-center">제목</div><div class="col-md-3 text-center">판매가</div>
+						</div>
+						<div class="searchBookList col-md-12">
+						</div>
+					</div>
+					<!-- 검색 디테일 -->
+					<div class="row searchDetail hidden">
 					</div>
 					<!-- Pagination -->
-					<div class="row">
+					<div class="row pagination hidden">
 					</div>
 				</div>
 				<!-- 나의 검색 기록 -->

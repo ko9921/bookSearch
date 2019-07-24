@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-	/*private static final Logger logger = LoggerFactory.getLogger(HomeController.class);*/
-	
 	@GetMapping("")
 	public String home(HttpServletRequest req, Locale locale, Model model) {
 		

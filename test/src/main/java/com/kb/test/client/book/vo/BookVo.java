@@ -24,6 +24,12 @@ public class BookVo{
 	
 	@Transient
 	private String isbn;			//isbn
+	@Transient
+	private String resultCode;		//결과코드
+	@Transient
+	private String resultMsg;		//결과메시지
+	@Transient
+	private int pageNo;			//페이지번호
 
 	
 	
@@ -58,6 +64,29 @@ public class BookVo{
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
+
+	public String getResultCode() {
+		return resultCode;
+	}
+
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
+	}
+
+	public String getResultMsg() {
+		return resultMsg;
+	}
+
+	public void setResultMsg(String resultMsg) {
+		this.resultMsg = resultMsg;
+	}
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	
 }
