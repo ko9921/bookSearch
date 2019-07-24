@@ -117,8 +117,9 @@ public class BookServiceImpl implements BookService{
 						searchParam = searchParam + "&start=" + (bookVo.getPageNo()*10 -9);
 					}
 				}
-				
+				System.out.println("resultJson (KKO) : " + resultJson.toString());
 				resultJson = APIUtil.getNaverRestApi(naverBookAPI+searchParam, naverClientID, naverClientSecret);
+				System.out.println("resultJson (Naver) : " + resultJson.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,4 +130,6 @@ public class BookServiceImpl implements BookService{
 		}
 		return resultJson;
 	}
+	
+	
 }

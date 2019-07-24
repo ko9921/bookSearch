@@ -137,7 +137,7 @@ function bookDetail(tempIsbn) {
 						
 						searchBookHTML += "<div class='row detail-content'>"; 
 						searchBookHTML += "<label class='col-md-3 control-label'>출판일</label>"; 
-						searchBookHTML += "<div class='col-md-9 text-left'>"+new Date(bookItem.datetime).format("yyyy-MM-dd HH:mm:ss")+"</div>"; 
+						searchBookHTML += "<div class='col-md-9 text-left'>"+new Date(bookItem.datetime).format("yyyy-MM-dd")+"</div>"; 
 						searchBookHTML += "</div>"; 
 						
 						searchBookHTML += "<div class='row detail-content'>"; 
