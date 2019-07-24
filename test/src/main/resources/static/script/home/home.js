@@ -27,8 +27,6 @@ function search(isPageChange) {
 		alert("검색어를 입력하세요.");
 	}
 	
-	console.log(isPageChange);
-	
 	$.ajax({
 		type:"get",
 		url : "/book/searchList?keyword="+search+"&pageNo="+pageNo+"&isPageChange="+isPageChange,
