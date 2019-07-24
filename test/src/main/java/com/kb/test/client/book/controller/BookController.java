@@ -60,16 +60,21 @@ public class BookController {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		
-		HashMap<String, String> response = bookService.setBookKeyword(keyword);
+		System.out.println("bookVo.isPageChange() : " + bookVo.getIsPageChange());
 		
-		if(response.get("msg").equals("FAIL")) {
-			result.put("result", "FAIL");
-			result.put("msg", "검색도중 오류가 발생하였습니다. 다시 시도해 주시기 바랍니다.");
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		HashMap<String, String> response = new HashMap<String, String>();
+		if(bookVo.getIsPageChange().equals("false")) {
+			response = bookService.setBookKeyword(keyword);
+			
+			if(response.get("msg").equals("FAIL")) {
+				result.put("result", "FAIL");
+				result.put("msg", "검색도중 오류가 발생하였습니다. 다시 시도해 주시기 바랍니다.");
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}
 		}
 		
 		// 4. 내 검색 히스토리 (로그인시에만 검색히스토리 작성) 
-		if(!CommonUtil.getSafeString(session.getAttribute("id")).equals("")) {
+		if(bookVo.getIsPageChange().equals("false") && !CommonUtil.getSafeString(session.getAttribute("id")).equals("")) {
 			response = userService.setUserHistory(keyword, CommonUtil.getSafeString(session.getAttribute("id")));
 			if(response.get("msg").equals("FAIL")) {
 				result.put("result", "FAIL");

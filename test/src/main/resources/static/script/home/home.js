@@ -18,7 +18,7 @@ function enterSearch() {
 	setSearchVal(keyword);
 }
 
-function search() {
+function search(isPageChange) {
 	
 	var search = $("#home input[name=keyword]").val();
 	var pageNo = Number($("#home input[name=pageNo]").val());
@@ -27,9 +27,11 @@ function search() {
 		alert("검색어를 입력하세요.");
 	}
 	
+	console.log(isPageChange);
+	
 	$.ajax({
 		type:"get",
-		url : "/book/searchList?keyword="+search+"&pageNo="+pageNo,
+		url : "/book/searchList?keyword="+search+"&pageNo="+pageNo+"&isPageChange="+isPageChange,
 		success :function(data){
 			getKeywordList();
 			getUserHistoryList();
@@ -199,7 +201,7 @@ function setSearchVal(keyword){
 	$("#home input[name=totalCount]").val(0);
 	$("#home input[name=pageNo]").val(1);
 	
-	search();
+	search(false);
 }
 
 function getUserHistoryList() {
@@ -288,5 +290,5 @@ function drawPagination() {
 function changePage(selPageNo) {
 	$("#home input[name=pageNo]").val(selPageNo);
 	
-	search();
+	search(true);
 }

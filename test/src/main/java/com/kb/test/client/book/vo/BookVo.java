@@ -23,11 +23,7 @@ public class BookVo{
 	private int searchcnt;			//조회회수
 	
 	@Transient
-	private String isbn;			//isbn
-	@Transient
-	private String resultCode;		//결과코드
-	@Transient
-	private String resultMsg;		//결과메시지
+	private String isPageChange;	//페이지전환여부
 	@Transient
 	private int pageNo;			//페이지번호
 
@@ -56,29 +52,13 @@ public class BookVo{
 	public void setSearchcnt(int searchCnt) {
 		this.searchcnt = searchCnt;
 	}
-
-	public String getIsbn() {
-		return isbn;
+	
+	public String getIsPageChange() {
+		return isPageChange;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public String getResultCode() {
-		return resultCode;
-	}
-
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
-
-	public String getResultMsg() {
-		return resultMsg;
-	}
-
-	public void setResultMsg(String resultMsg) {
-		this.resultMsg = resultMsg;
+	public void setIsPageChange(String isPageChange) {
+		this.isPageChange = isPageChange;
 	}
 
 	public int getPageNo() {
