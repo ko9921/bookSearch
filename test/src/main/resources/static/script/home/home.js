@@ -6,16 +6,22 @@ $(document).ready(function() {
 		getUserHistoryList();
 	}
 	
-	$("#keyword").keypress(function (e) {
+	$("#search").keypress(function (e) {
 		if (e.which == 13){
-			search();
+			enterSearch();
 		}
 	});
 });
 
+function enterSearch() {
+	var keyword = $("#home input[name=search]").val();
+	setSearchVal(keyword);
+}
+
 function search() {
 	
 	var search = $("#home input[name=keyword]").val();
+	var pageNo = Number($("#home input[name=pageNo]").val());
 	
 	if(!search) {
 		alert("검색어를 입력하세요.");
@@ -23,7 +29,7 @@ function search() {
 	
 	$.ajax({
 		type:"get",
-		url : "/book/searchList?keyword="+search,
+		url : "/book/searchList?keyword="+search+"&pageNo="+pageNo,
 		success :function(data){
 			getKeywordList();
 			getUserHistoryList();
@@ -31,6 +37,11 @@ function search() {
 			if(data.result == 'SUCCESS'){
 				if(data.bookList != null){
 					var bookListJson = JSON.parse(data.bookList);
+					// pagination
+					$("#home input[name=totalCount]").val(bookListJson.meta.pageable_count);
+					drawPagination();
+					
+					// bookList
 					if(bookListJson.documents != null && bookListJson.documents.length > 0) {
 						var searchBookHTML = "";
 						for(var i = 0; i < bookListJson.documents.length; i++){
@@ -76,9 +87,6 @@ function bookDetail(tempIsbn) {
 	
 	var isbn = isbnSplit[0] == "" ? isbnSplit[1] : isbnSplit[0];
 	
-	console.log(isbnSplit[0]);
-	console.log(isbnSplit[1]);
-	
 	$.ajax({
 		type:"get",
 		url : "/book/detail?keyword="+isbn,
@@ -106,8 +114,6 @@ function bookDetail(tempIsbn) {
 						searchBookHTML += "<label class='col-md-3 control-label'>제목</label>"; 
 						searchBookHTML += "<div class='col-md-9 text-left'>"+bookItem.title+"</div>"; 
 						searchBookHTML += "</div>"; 
-						
-						console.log(bookItem.contents);
 						
 						searchBookHTML += "<div class='row detail-content'>"; 
 						searchBookHTML += "<label class='col-md-3 control-label'>소개</label>"; 
@@ -189,6 +195,9 @@ function getKeywordList() {
 
 function setSearchVal(keyword){
 	$("#home input[name=keyword]").val(keyword);
+	$("#home input[name=search]").val(keyword);
+	$("#home input[name=totalCount]").val(0);
+	$("#home input[name=pageNo]").val(1);
 	
 	search();
 }
@@ -218,4 +227,66 @@ function getUserHistoryList() {
 			}
 		}
 	});
+}
+
+function drawPagination() {
+	var totalCount = Number($("#home input[name=totalCount]").val());
+	var currentPageNo = Number($("#home input[name=pageNo]").val());
+	// 끝번호
+	var endPageNo = Math.ceil(totalCount/10);
+	if(endPageNo > 100) endPageNo = 100;
+	// 최대 7개씩 한페이지에 보여줌
+	var visualCount = 7;
+	// 앞에 ... 넣을지 결정하는부분
+	var morePrev = "<div class='col-md-1'></div>";
+	if(currentPageNo > Math.ceil(visualCount/2))  {
+		morePrev = "<div class='col-md-1'>...</div>";
+	} 
+	// 뒤에 ... 넣을지 결정하는 부분
+	var moreNext = "<div class='col-md-1'></div>";
+	if((endPageNo - currentPageNo) >= Math.ceil(visualCount/2))  {
+		moreNext = "<div class='col-md-1'>...</div>";
+	}
+	
+	var pagingHTML = "";
+	if(currentPageNo == 1) {
+		pagingHTML += "<div class='col-md-1 btn btn-primary'>&lt;</div>";
+	} else {
+		pagingHTML += "<div class='col-md-1 btn btn-primary' onclick='changePage(\""+(currentPageNo-1)+"\")'>&lt;</div>";
+	}
+	pagingHTML += morePrev;
+	if((currentPageNo-3) > 0) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo-3)+"\")'>"+(currentPageNo-3)+"</div>";
+	}
+	if((currentPageNo-2) > 0) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo-2)+"\")'>"+(currentPageNo-2)+"</div>";
+	}
+	if((currentPageNo-1) > 0) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo-1)+"\")'>"+(currentPageNo-1)+"</div>";
+	}
+	pagingHTML += "<div class='col-md-1 btn btn-success' onclick='changePage(\""+(currentPageNo)+"\")'>"+(currentPageNo)+"</div>";
+	if((currentPageNo+1) < (endPageNo+1)) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo+1)+"\")'>"+(currentPageNo+1)+"</div>";
+	}
+	if((currentPageNo+2) < (endPageNo+1)) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo+2)+"\")'>"+(currentPageNo+2)+"</div>";
+	}
+	if((currentPageNo+3) < (endPageNo+1)) {
+		pagingHTML += "<div class='col-md-1 btn btn-page' onclick='changePage(\""+(currentPageNo+3)+"\")'>"+(currentPageNo+3)+"</div>";
+	}
+	pagingHTML += moreNext;
+	if(currentPageNo == endPageNo) {
+		pagingHTML += "<div class='col-md-1 btn btn-primary'>&gt;</div>";
+	} else {
+		pagingHTML += "<div class='col-md-1 btn btn-primary' onclick='changePage(\""+(currentPageNo+1)+"\")'>&gt;</div>";
+	}
+	
+	$("#home .pagination").empty();
+	$("#home .pagination").append(pagingHTML);
+}
+
+function changePage(selPageNo) {
+	$("#home input[name=pageNo]").val(selPageNo);
+	
+	search();
 }

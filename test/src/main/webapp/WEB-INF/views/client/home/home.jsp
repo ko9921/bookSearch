@@ -12,6 +12,9 @@
 			<div class="login-container">
 				<div class="text-right m-b-md">
 					<input type="hidden" class="id" name="id" value="${sessionScope.id}">
+					<input type="hidden" name="totalCount" value="0">
+					<input type="hidden" name="pageNo" value="1">
+					<input type="hidden" name="keyword" value="">
 					<c:if test="${empty sessionScope.id}">
 						<a class="btn btn-primary btn-sm login" href="/user/login">로그인</a>
 						<a class="btn btn-primary btn-sm signup" href="/user/signup">회원가입</a>
@@ -38,10 +41,10 @@
 					<!-- 검색 -->
 					<div class="row">
 						<div class="col-md-10">
-							<input type="text" title="Please enter title / ISBN / publisher / person" placeholder="Search" value="" name="keyword" id="keyword" autofocus="autofocus" class="form-control">
+							<input type="text" title="Please enter title / ISBN / publisher / person" placeholder="Search" value="" name="search" id="search" autofocus="autofocus" class="form-control">
 						</div>
 						<div class="col-md-2">
-							<button class="btn btn-success btn-block" onclick="search()"> 검색 </button>
+							<button class="btn btn-success btn-block" onclick="enterSearch()"> 검색 </button>
 						</div>
 					</div>
 					<!-- 검색 리스트 -->
@@ -56,7 +59,7 @@
 					<div class="row searchDetail hidden">
 					</div>
 					<!-- Pagination -->
-					<div class="row pagination hidden">
+					<div class="row pagination col-md-12 text-center hidden">
 					</div>
 				</div>
 				<!-- 나의 검색 기록 -->
