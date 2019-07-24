@@ -1,1 +1,1 @@
-insert into keywordcount (keyword, searchCnt) values ('우리',128),('사랑',1024),('영원',438),('토익',10878),('백종원',7878),('리액트',778),('카카오',883877),('Korea',3213);
+insert into keywordcount (keyword, searchCnt) values ('lion',128),('java',1024),('food',438),('program',10878),('google',7878),('naver',778),('kakao',883877),('Korea',3213);
